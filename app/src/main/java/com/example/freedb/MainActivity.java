@@ -118,7 +118,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             return true;
         }else if(id == R.id.mostraBSO){
 
-        }else if(id == R.id.mostraPeli){
+        }else if(id == R.id.ajuda){
 
         }
 

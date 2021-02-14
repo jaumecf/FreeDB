@@ -13,6 +13,8 @@ android:scrollbars="vertical">
 
         <LinearLayout
             android:id="@+id/linear1"
+            android:layout_marginVertical="10px"
+            android:layout_marginHorizontal="10px"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -29,6 +31,8 @@ android:scrollbars="vertical">
 
         <LinearLayout
             android:id="@+id/linear2"
+            android:layout_marginVertical="10px"
+            android:layout_marginHorizontal="10px"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -45,6 +49,8 @@ android:scrollbars="vertical">
 
         <LinearLayout
             android:id="@+id/linear3"
+            android:layout_marginVertical="10px"
+            android:layout_marginHorizontal="10px"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -65,6 +71,8 @@ android:scrollbars="vertical">
 
         <LinearLayout
             android:id="@+id/linear4"
+            android:layout_marginVertical="10px"
+            android:layout_marginHorizontal="10px"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -87,15 +95,42 @@ android:scrollbars="vertical">
 
 
         </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="@color/cardview_light_background" />
 
         <LinearLayout
             android:id="@+id/linear5"
+            android:layout_marginVertical="10px"
+            android:layout_marginHorizontal="10px"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="horizontal">
 
-            <Spinner android:id="@+id/spinner"
+            <Spinner android:id="@+id/spinnerGenere"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+
+
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="@color/cardview_light_background" />
+
+        <LinearLayout
+            android:id="@+id/linear6"
+            android:layout_marginVertical="10px"
+            android:layout_marginHorizontal="10px"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <Spinner android:id="@+id/spinnerBSO"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -103,8 +138,15 @@ android:scrollbars="vertical">
 
         </LinearLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="@color/cardview_light_background" />
+
         <LinearLayout
-            android:id="@+id/linear6"
+            android:id="@+id/linear7"
+            android:layout_marginVertical="10px"
+            android:layout_marginHorizontal="10px"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:weightSum="2"

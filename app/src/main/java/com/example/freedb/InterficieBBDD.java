@@ -187,7 +187,7 @@ public class InterficieBBDD {
     }
 
     //Llista totes les BSO
-    public ArrayList<BSO> getAllBSO() {
+    public ArrayList<BSO> llistaBSO() {
         ArrayList<BSO> bandes_sonores = new ArrayList<BSO>();
         Cursor cursor = bd.query(AjudaPeliBBDD.BD_TAULA_BSO, allColumnsBSO, null, null, null, null, AjudaPeliBBDD.CLAU_TITOL + " ASC");
         cursor.moveToFirst();

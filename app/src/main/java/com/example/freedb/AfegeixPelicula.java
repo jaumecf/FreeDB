@@ -16,6 +16,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -40,15 +41,17 @@ public class AfegeixPelicula extends AppCompatActivity implements View.OnClickLi
     private int RESULT_OK = 1;
 
     private ArrayList<Genere> llista_generes;
+    private ArrayList<BSO> llista_bso;
     private InterficieBBDD bd;
     private EditText editNom, editComentari, editData;
     private Button btnAfegir, btnTorna;
     private ImageView mImatge;
-    private Spinner spinner;
+    private Spinner spinnerGenere,spinnerBSO;
     private Bitmap imatge_bitmap;
     private byte[] bitmapmap;
     private float valoracio_rating = 0;
     private Genere genere = null;
+    private BSO bso = null;
     private Pelicula peli = null;
 
 
@@ -57,15 +60,21 @@ public class AfegeixPelicula extends AppCompatActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_afegeix_pelicula);
 
+        //Inicialitzam la BBDD
+        bd = new InterficieBBDD(this);
+        bd.obre();
+
         editNom = findViewById(R.id.nom);
         editComentari = findViewById(R.id.comentari);
         editData = findViewById(R.id.data);
         btnAfegir = (Button) findViewById(R.id.confirma);
         btnTorna = (Button) findViewById(R.id.torna);
         mImatge = (ImageView) findViewById(R.id.imatge);
-        spinner = (Spinner) findViewById(R.id.spinner);
+        spinnerGenere = (Spinner) findViewById(R.id.spinnerGenere);
+        spinnerBSO = (Spinner) findViewById(R.id.spinnerBSO);
 
-        spinner.setOnItemSelectedListener(this);
+        spinnerGenere.setOnItemSelectedListener(this);
+        spinnerBSO.setOnItemSelectedListener(this);
         editData.setOnClickListener(this);
         mImatge.setOnClickListener(this);
         btnAfegir.setOnClickListener(this);
@@ -80,27 +89,14 @@ public class AfegeixPelicula extends AppCompatActivity implements View.OnClickLi
             }
         });
 
-        bd = new InterficieBBDD(this);
-        bd.obre();
-        llista_generes = bd.llistaGeneres();
-        // Creating adapter for spinner
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,ferSpinner(llista_generes));
-
-        // Drop down layout style - list view with radio button
-        //dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        // attaching data adapter to spinner
-        spinner.setAdapter(dataAdapter);
-        spinner.setSelection(0);
-        bd.tanca();
+        ferSpinnerGeneres();
+        ferSpinnerBSO();
 
     }
 
     @Override
     public void onClick(View v) {
         if (v == btnAfegir) {
-            bd = new InterficieBBDD(this);
-            bd.obre();
             Pelicula peli = generaObjectePelicula();
 
             if (peli == null) {
@@ -128,7 +124,7 @@ public class AfegeixPelicula extends AppCompatActivity implements View.OnClickLi
     }
 
     public Pelicula generaObjectePelicula(){
-        if(genere != null && !editNom.getText().toString().isEmpty()){
+        if(bso != null && genere != null && !editNom.getText().toString().isEmpty()){
             peli = new Pelicula();
             peli.setNom(editNom.getText().toString());
             peli.setComentari((editComentari.getText().toString()));
@@ -136,6 +132,7 @@ public class AfegeixPelicula extends AppCompatActivity implements View.OnClickLi
             peli.setValoracio(valoracio_rating);
             peli.setFoto(bitmapmap);
             peli.setIdGenere(genere.getId());
+            peli.setIdBSO(bso.getId());
         }
         return peli;
     }
@@ -192,24 +189,56 @@ public class AfegeixPelicula extends AppCompatActivity implements View.OnClickLi
         newFragment.show(getSupportFragmentManager(), "datePicker");
     }
 
-    private List<String> ferSpinner(ArrayList<Genere> generes){
+    private void ferSpinnerGeneres(){
+
+        llista_generes = bd.llistaGeneres();
+
         // Spinner Drop down elements
         List<String> string_generes = new ArrayList<String>();
         string_generes.add("Selecciona genere..");
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            for (int i = 0; i<generes.size();i++){
-                string_generes.add(generes.get(i).getNom());
+            for (int i = 0; i<llista_generes.size();i++){
+                string_generes.add(llista_generes.get(i).getNom());
             }
         }
-        return string_generes;
+
+        // Creating adapter for spinner
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this, R.layout.text_spinner, string_generes);
+
+        // attaching data adapter to spinner
+        spinnerGenere.setAdapter(dataAdapter);
+        spinnerGenere.setSelection(0);
+    }
+
+    private void ferSpinnerBSO(){
+
+        llista_bso = bd.llistaBSO();
+
+        // Spinner Drop down elements
+        List<String> string_bso = new ArrayList<String>();
+        string_bso.add("Selecciona bso..");
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            for (int i = 0; i<llista_bso.size();i++){
+                string_bso.add(llista_bso.get(i).getTitol());
+            }
+        }
+
+        // Creating adapter for spinner
+        ArrayAdapter<String> dataAdapterBSO = new ArrayAdapter<>(this, R.layout.text_spinner, string_bso);
+
+        // attaching data adapter to spinner
+        spinnerBSO.setAdapter(dataAdapterBSO);
+        spinnerBSO.setSelection(0);
     }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         if(position != 0){
-            genere = llista_generes.get(position-1);
-
-
+            if(parent.getId() == R.id.spinnerGenere) {
+                genere = llista_generes.get(position-1);
+            } else if(parent.getId() == R.id.spinnerBSO) {
+                bso = llista_bso.get(position-1);
+            }
         }
     }
     @Override

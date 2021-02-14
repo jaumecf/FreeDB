@@ -18,8 +18,8 @@
         android:title="Llista BSO"
         app:showAsAction="never" />
     <item
-        android:id="@+id/mostraPeli"
+        android:id="@+id/ajuda"
         android:orderInCategory="100"
-        android:title="Llista Pelicula"
+        android:title="Ajuda"
         app:showAsAction="never" />
 </menu>

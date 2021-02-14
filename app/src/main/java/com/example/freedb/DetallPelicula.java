@@ -16,6 +16,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -39,6 +40,7 @@ public class DetallPelicula extends AppCompatActivity implements View.OnClickLis
 
     private InterficieBBDD bd;
     private ArrayList<Genere> llista_generes;
+    private ArrayList<BSO> llista_bso;
 
     private int GALLERY_REQUEST_CODE = 1;
     private int APP_PERMISSION_READ_STORAGE = 1;
@@ -54,8 +56,9 @@ public class DetallPelicula extends AppCompatActivity implements View.OnClickLis
     private Bitmap imatge_bitmap;
     private byte[] bitmapmap;
     private float valoracio_rating = 0;
-    private Spinner spinner;
+    private Spinner spinnerGenere, spinnerBSO;
     private Genere genere = null;
+    private BSO bso = null;
 
 
     @Override
@@ -67,7 +70,7 @@ public class DetallPelicula extends AppCompatActivity implements View.OnClickLis
         bd = new InterficieBBDD(this.getApplicationContext());
         bd.obre();
         peli = bd.obtenirPelicula(idPelicula);
-
+        Log.d("ID"," ID BSO "+peli.getIdBSO());
 
 
 
@@ -81,9 +84,11 @@ public class DetallPelicula extends AppCompatActivity implements View.OnClickLis
         btnTorna = (Button) findViewById(R.id.torna);
         btnActualitza = (Button) findViewById(R.id.actualitza);
         btnEsborra = (Button) findViewById(R.id.esborra);
-        spinner = (Spinner) findViewById(R.id.spinner);
+        spinnerGenere = (Spinner) findViewById(R.id.spinnerGenere);
+        spinnerBSO = (Spinner) findViewById(R.id.spinnerBSO);
 
-        spinner.setOnItemSelectedListener(this);
+        spinnerGenere.setOnItemSelectedListener(this);
+        spinnerBSO.setOnItemSelectedListener(this);
         btnTorna.setOnClickListener(this);
         btnActualitza.setOnClickListener(this);
         btnEsborra.setOnClickListener(this);
@@ -127,7 +132,8 @@ public class DetallPelicula extends AppCompatActivity implements View.OnClickLis
         editComentari.setText(peli.getComentari());
         editData.setText(peli.getData());
         ratingBar.setRating(peli.getValoracio());
-        ferSpinner(Math.round(peli.getIdGenere()));
+        ferSpinnerGeneres();
+        ferSpinnerBSO();
         pinta_imatge(peli);
     }
 
@@ -205,33 +211,58 @@ public class DetallPelicula extends AppCompatActivity implements View.OnClickLis
         newFragment.show(getSupportFragmentManager(), "datePicker");
     }
 
-    private void ferSpinner(int posicio){
+    private void ferSpinnerGeneres() {
+
         llista_generes = bd.llistaGeneres();
 
         // Spinner Drop down elements
         List<String> string_generes = new ArrayList<String>();
         string_generes.add("Selecciona genere..");
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            for (int i = 0; i<llista_generes.size();i++){
+            for (int i = 0; i < llista_generes.size(); i++) {
                 string_generes.add(llista_generes.get(i).getNom());
             }
         }
-        // Creating adapter for spinner
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,string_generes);
 
-        // Drop down layout style - list view with radio button
-        //dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Creating adapter for spinner
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this, R.layout.text_spinner, string_generes);
 
         // attaching data adapter to spinner
-        spinner.setAdapter(dataAdapter);
-        spinner.setSelection(posicio);
+        spinnerGenere.setAdapter(dataAdapter);
+        spinnerGenere.setSelection(Math.round(peli.getIdGenere()));
 
+    }
+
+    private void ferSpinnerBSO(){
+
+        llista_bso = bd.llistaBSO();
+
+        // Spinner Drop down elements
+        List<String> string_bso = new ArrayList<String>();
+        string_bso.add("Selecciona bso..");
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            for (int i = 0; i<llista_bso.size();i++){
+                string_bso.add(llista_bso.get(i).getTitol());
+            }
+        }
+
+        // Creating adapter for spinner
+        ArrayAdapter<String> dataAdapterBSO = new ArrayAdapter<>(this, R.layout.text_spinner, string_bso);
+
+        // attaching data adapter to spinner
+        spinnerBSO.setAdapter(dataAdapterBSO);
+        Log.d("ID"," ID BSO "+peli.getIdBSO());
+        spinnerBSO.setSelection(Math.round(peli.getIdBSO()));
     }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         if(position != 0){
-            genere = llista_generes.get(position-1);
+            if(parent.getId() == R.id.spinnerGenere) {
+                genere = llista_generes.get(position-1);
+            } else if(parent.getId() == R.id.spinnerBSO) {
+                bso = llista_bso.get(position-1);
+            }
         }
     }
 
