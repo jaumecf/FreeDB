@@ -1,0 +1,25 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.freedb.MainActivity">
+    <item
+        android:id="@+id/afegeixPelicula"
+        android:orderInCategory="100"
+        android:title="Afegeix Pelicula"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/afegeixBSO"
+        android:orderInCategory="100"
+        android:title="Afegeix BSO"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/mostraBSO"
+        android:orderInCategory="100"
+        android:title="Llista BSO"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/mostraPeli"
+        android:orderInCategory="100"
+        android:title="Llista Pelicula"
+        app:showAsAction="never" />
+</menu>
