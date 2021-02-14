@@ -1,6 +1,7 @@
 package com.example.freedb;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 
 public class DetallBSO extends AppCompatActivity {

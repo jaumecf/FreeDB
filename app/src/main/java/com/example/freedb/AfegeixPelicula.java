@@ -16,7 +16,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -31,7 +30,6 @@ import android.widget.Toast;
 import com.example.freedb.ui.dialog.DatePickerFragment;
 
 import java.io.ByteArrayOutputStream;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,7 +55,7 @@ public class AfegeixPelicula extends AppCompatActivity implements View.OnClickLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_afegir_pelicula);
+        setContentView(R.layout.activity_afegeix_pelicula);
 
         editNom = findViewById(R.id.nom);
         editComentari = findViewById(R.id.comentari);
