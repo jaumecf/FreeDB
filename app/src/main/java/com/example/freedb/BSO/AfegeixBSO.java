@@ -8,7 +8,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.freedb.BSO;
 import com.example.freedb.BBDD.InterficieBBDD;
 import com.example.freedb.R;
 import com.google.android.youtube.player.YouTubeBaseActivity;

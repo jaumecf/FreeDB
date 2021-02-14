@@ -11,6 +11,14 @@ import android.os.Build;
 import android.os.Bundle;
 
 import com.example.freedb.BBDD.InterficieBBDD;
+import com.example.freedb.BSO.AfegeixBSO;
+import com.example.freedb.BSO.BSO;
+import com.example.freedb.BSO.BSOAdapter;
+import com.example.freedb.BSO.DetallBSO;
+import com.example.freedb.Pelicula.AfegeixPelicula;
+import com.example.freedb.Pelicula.DetallPelicula;
+import com.example.freedb.Pelicula.PeliAdapter;
+import com.example.freedb.Pelicula.Pelicula;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -30,18 +38,21 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener{
 
-    private RecyclerView recyclerView;
-    private PeliAdapter adapter;
+    private RecyclerView recyclerViewGenere, recyclerViewBSO;
+    private PeliAdapter adapterGenere;
+    private BSOAdapter adapterBSO;
     private Paint p = new Paint();
     private RecyclerView.LayoutManager layoutManager;
     private InterficieBBDD bd;
     private int ADD_CODE = 1;
-    private int DETAIL_CODE = 2;
+    private int DETAIL_CODE_GEN = 2;
+    private int DETAIL_CODE_BSO = 2;
     private int RESULT_OK = 1;
 
     private View.OnClickListener onItemClickListener;
 
     private ArrayList<Pelicula> llistaPelicules;
+    private ArrayList<BSO> llistaBSO;
     private ArrayList<Long> id_peli_eliminar;
 
     @Override
@@ -114,16 +125,59 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         if (id == R.id.afegeixPelicula) {
             startActivityForResult(new Intent(getApplicationContext(), AfegeixPelicula.class),ADD_CODE);
             return true;
+        }else if(id == R.id.llistaPelis) {
+            if(llistaBSO != null){
+                llistaBSO.clear();
+            }
+            llistaPelis();
         }else if(id == R.id.afegeixBSO){
             startActivityForResult(new Intent(getApplicationContext(), AfegeixBSO.class),ADD_CODE);
             return true;
         }else if(id == R.id.mostraBSO){
-
+            if(llistaPelicules != null){
+                llistaPelicules.clear();
+            }
+            llistaBSO();
         }else if(id == R.id.ajuda){
 
         }
-
         return super.onOptionsItemSelected(item);
+    }
+
+    public void llistaBSO() {
+        // Obrim la base de dades
+        bd = new InterficieBBDD(this);
+        bd.obre();
+        // Obtenim tots els vins
+        llistaBSO = bd.llistaBSO();
+        llistaPelicules.clear();
+        bd.tanca();
+
+        actualitzaRecyclerBSO();
+    }
+
+    private void actualitzaRecyclerBSO() {
+        // specify an adapter (see also next example)
+        recyclerViewBSO = (RecyclerView) findViewById(R.id.my_recycler_view);
+        // use this setting to improve performance if you know that changes
+        // in content do not change the layout size of the RecyclerView
+        recyclerViewBSO.setHasFixedSize(true);
+        // use a linear layout manager
+        //layoutManager = new LinearLayoutManager(this);
+        //recyclerView.setLayoutManager(layoutManager);
+        recyclerViewBSO.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
+        adapterBSO = new BSOAdapter(getApplicationContext(), llistaBSO, new BSOAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BSO bso) {
+                //Toast.makeText(getApplicationContext(), "Item Clicked"+Peli.getNom(), Toast.LENGTH_LONG).show();
+                //Quan clicam damunt un element de la llista
+                Intent intent = new Intent(getApplicationContext(), DetallBSO.class);
+                intent.putExtra("idBSO",bso.getId());
+                startActivityForResult(intent,DETAIL_CODE_BSO);
+            }
+        });
+        recyclerViewBSO.setAdapter(adapterBSO);
+        enableSwipe();
     }
 
     public void llistaPelis() {
@@ -135,36 +189,28 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         bd.tanca();
 
         actualitzaRecycler();
-
-
     }
 
     private void actualitzaRecycler() {
         // specify an adapter (see also next example)
-        recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
+        recyclerViewGenere = (RecyclerView) findViewById(R.id.my_recycler_view);
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
-        recyclerView.setHasFixedSize(true);
-
+        recyclerViewGenere.setHasFixedSize(true);
         // use a linear layout manager
         //layoutManager = new LinearLayoutManager(this);
         //recyclerView.setLayoutManager(layoutManager);
-
-        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
-
-
-
-        adapter = new PeliAdapter(getApplicationContext(), llistaPelicules, new PeliAdapter.OnItemClickListener() {
+        recyclerViewGenere.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
+        adapterGenere = new PeliAdapter(getApplicationContext(), llistaPelicules, new PeliAdapter.OnItemClickListener() {
             @Override public void onItemClick(Pelicula Peli) {
                 //Toast.makeText(getApplicationContext(), "Item Clicked"+Peli.getNom(), Toast.LENGTH_LONG).show();
                 //Quan clicam damunt un element de la llista
-                Intent intent = new Intent(getApplicationContext(),DetallPelicula.class);
+                Intent intent = new Intent(getApplicationContext(), DetallPelicula.class);
                 intent.putExtra("idPelicula",Peli.getId());
-                startActivityForResult(intent,DETAIL_CODE);
+                startActivityForResult(intent,DETAIL_CODE_GEN);
             }
         });
-
-        recyclerView.setAdapter(adapter);
+        recyclerViewGenere.setAdapter(adapterGenere);
         enableSwipe();
     }
 
@@ -219,7 +265,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                     final int deletedPosition = position;
                     //guardam l'id de la pel·licula
                     id_peli_eliminar.add(peliEsborrada.getId());
-                    adapter.eliminaPeli(position);
+                    adapterGenere.eliminaPeli(position);
 
 
                     // showing snack bar with Undo option
@@ -228,7 +274,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                         @Override
                         public void onClick(View view) {
                             // undo is selected, restore the deleted item
-                            adapter.retornaPeli(peliEsborrada, deletedPosition);
+                            adapterGenere.retornaPeli(peliEsborrada, deletedPosition);
                             id_peli_eliminar.remove(id_peli_eliminar.size()-1);
                         }
                     });
@@ -257,7 +303,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             }
         };
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
-        itemTouchHelper.attachToRecyclerView(recyclerView);
+        itemTouchHelper.attachToRecyclerView(recyclerViewGenere);
     }
 }
 

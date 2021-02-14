@@ -1,4 +1,4 @@
-package com.example.freedb;
+package com.example.freedb.Pelicula;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -28,6 +28,9 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.freedb.BBDD.InterficieBBDD;
+import com.example.freedb.BSO.BSO;
+import com.example.freedb.Genere.Genere;
+import com.example.freedb.R;
 import com.example.freedb.ui.dialog.DatePickerFragment;
 
 import java.io.ByteArrayOutputStream;

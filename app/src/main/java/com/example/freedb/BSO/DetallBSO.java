@@ -8,7 +8,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.freedb.BSO;
 import com.example.freedb.BBDD.InterficieBBDD;
 import com.example.freedb.R;
 import com.google.android.youtube.player.YouTubeBaseActivity;
@@ -101,8 +100,9 @@ public class DetallBSO extends YouTubeBaseActivity implements View.OnClickListen
         editData.setText(bso.getData());
         editLink.setText(bso.getLink());
         YOUTUBE_VIDEO_ID = expandUrl(editLink.getText().toString());
-        Log.d("ID","ID: "+YOUTUBE_VIDEO_ID);
-        publicaVideo(YOUTUBE_VIDEO_ID, youtubeView);
+        if(YOUTUBE_VIDEO_ID != null){
+            publicaVideo(YOUTUBE_VIDEO_ID, youtubeView);
+        }
     }
 
     public BSO getInfo(){

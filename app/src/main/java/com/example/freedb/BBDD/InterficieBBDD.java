@@ -8,9 +8,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
-import com.example.freedb.BSO;
-import com.example.freedb.Genere;
-import com.example.freedb.Pelicula;
+import com.example.freedb.BSO.BSO;
+import com.example.freedb.Genere.Genere;
+import com.example.freedb.Pelicula.Pelicula;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
@@ -189,7 +189,7 @@ public class InterficieBBDD {
     //Llista totes les BSO
     public ArrayList<BSO> llistaBSO() {
         ArrayList<BSO> bandes_sonores = new ArrayList<BSO>();
-        Cursor cursor = bd.query(AjudaPeliBBDD.BD_TAULA_BSO, allColumnsBSO, null, null, null, null, AjudaPeliBBDD.CLAU_TITOL + " ASC");
+        Cursor cursor = bd.query(AjudaPeliBBDD.BD_TAULA_BSO, allColumnsBSO, null, null, null, null, AjudaPeliBBDD.CLAU_ID_BSO + " ASC");
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             BSO bso = cursorToBSO(cursor);

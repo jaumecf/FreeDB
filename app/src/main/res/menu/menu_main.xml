@@ -8,6 +8,11 @@
         android:title="Afegeix Pelicula"
         app:showAsAction="never" />
     <item
+        android:id="@+id/llistaPelis"
+        android:orderInCategory="100"
+        android:title="Llista Pelicules"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/afegeixBSO"
         android:orderInCategory="100"
         android:title="Afegeix BSO"

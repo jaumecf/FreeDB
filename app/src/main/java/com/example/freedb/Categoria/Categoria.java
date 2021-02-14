@@ -1,4 +1,4 @@
-package com.example.freedb;
+package com.example.freedb.Categoria;
 
 public class Categoria {
 
