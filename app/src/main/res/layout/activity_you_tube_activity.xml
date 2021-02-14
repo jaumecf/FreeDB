@@ -15,7 +15,7 @@
         android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:context="com.example.youtubeplayer.YoutubeActivity"
-        tools:showIn="@layout/activity_You_Tube_Activity">
+        tools:showIn="@layout/activity_you_tube_activity">
 
 
     <com.google.android.youtube.player.YouTubePlayerView

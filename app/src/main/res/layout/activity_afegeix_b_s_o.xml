@@ -18,7 +18,7 @@
             android:orientation="horizontal">
 
             <EditText
-                android:id="@+id/nom"
+                android:id="@+id/titol"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Nom de la BSO"
@@ -34,8 +34,8 @@
             android:orientation="horizontal">
 
             <EditText
-                android:id="@+id/duracio"
-                android:hint="Duració HH:mm:ss"
+                android:id="@+id/autor"
+                android:hint="Autor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text=""/>
@@ -49,22 +49,38 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-
             <EditText
-                android:id="@+id/data"
-                android:hint="Data de creació"
+                android:id="@+id/duracio"
+                android:hint="Duració HH:mm:ss"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="date"
-                android:focusable="false"
-                android:clickable="true"
-                android:maxLines="1" />
+                android:text=""/>
 
 
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/linear4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <EditText
+                android:id="@+id/data"
+                android:hint="Recollirà data de la pel·lícula"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="date"
+                android:focusable="false"
+                android:clickable="false"
+                android:maxLines="1" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linear5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -82,7 +98,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/linear5"
+            android:id="@+id/linear6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -101,7 +117,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/linear6"
+            android:id="@+id/linear7"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:weightSum="2"
@@ -122,11 +138,5 @@
                 android:layout_weight="1"
                 android:text="Confirma"/>
         </LinearLayout>
-
-
-
-
-
-
     </LinearLayout>
 </ScrollView>

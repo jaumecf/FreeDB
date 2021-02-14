@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             startActivityForResult(new Intent(getApplicationContext(), AfegeixPelicula.class),ADD_CODE);
             return true;
         }else if(id == R.id.afegeixBSO){
-            startActivityForResult(new Intent(getApplicationContext(), YouTubeActivity.class),ADD_CODE);
+            startActivityForResult(new Intent(getApplicationContext(), AfegeixBSO.class),ADD_CODE);
             return true;
         }else if(id == R.id.mostraBSO){
 

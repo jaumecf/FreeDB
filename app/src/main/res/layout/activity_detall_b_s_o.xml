@@ -18,7 +18,7 @@
             android:orientation="horizontal">
 
             <EditText
-                android:id="@+id/nom"
+                android:id="@+id/titol"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Nom de la BSO"
@@ -34,8 +34,8 @@
             android:orientation="horizontal">
 
             <EditText
-                android:id="@+id/comentari"
-                android:hint="Comentari..."
+                android:id="@+id/autor"
+                android:hint="Autor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text=""/>
@@ -49,16 +49,12 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-
             <EditText
-                android:id="@+id/data"
-                android:hint="Data de creació"
+                android:id="@+id/duracio"
+                android:hint="Duració HH:mm:ss"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="date"
-                android:focusable="false"
-                android:clickable="true"
-                android:maxLines="1" />
+                android:text=""/>
 
 
         </LinearLayout>
@@ -67,19 +63,18 @@
             android:id="@+id/linear4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:orientation="horizontal">
 
+
             <EditText
-                android:id="@+id/link"
-                android:hint="Enllaç de YouTube"
+                android:id="@+id/data"
+                android:hint="Recollirà data de la pel·lícula"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="date"
                 android:focusable="false"
-                android:clickable="true"
+                android:clickable="false"
                 android:maxLines="1" />
-
 
 
         </LinearLayout>
@@ -88,7 +83,44 @@
             android:id="@+id/linear5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:weightSum="2"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enllaç de la BSO"
+                android:text=""/>
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linear6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <com.google.android.youtube.player.YouTubePlayerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                android:layout_centerHorizontal="true"
+                android:id="@+id/youtube_player"
+                android:layout_alignParentTop="true" />
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linear7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="3"
             android:orientation="horizontal">
 
             <Button
@@ -96,15 +128,24 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:drawableLeft="@android:drawable/ic_menu_revert"
-                android:layout_weight="1"
+                android:layout_weight="0.9"
                 android:text="Enrere"/>
+
             <Button
-                android:id="@+id/confirma"
+                android:id="@+id/actualitza"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@android:drawable/ic_menu_add"
-                android:layout_weight="1"
-                android:text="Confirma"/>
+                android:drawableLeft="@android:drawable/ic_menu_edit"
+                android:layout_weight="1.2"
+                android:text="Actualitza"/>
+
+            <Button
+                android:id="@+id/esborra"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@android:drawable/ic_menu_delete"
+                android:layout_weight="0.9"
+                android:text="Esborra"/>
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

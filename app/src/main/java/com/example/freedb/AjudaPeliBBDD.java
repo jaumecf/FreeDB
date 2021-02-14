@@ -13,7 +13,6 @@ public class AjudaPeliBBDD extends SQLiteOpenHelper {
     public static final String TAG = "InterficieBBDD";
     public static final String BD_NOM = "FreeDB";
     public static final String BD_TAULA_PELI = "pelicules";
-    public static final String BD_TAULA_CAT = "categoria";
     public static final String BD_TAULA_BSO = "bso";
     public static final String BD_TAULA_GENERE = "genere";
     public static final int VERSIO = 1;
@@ -40,12 +39,12 @@ public class AjudaPeliBBDD extends SQLiteOpenHelper {
     public static final String CLAU_ID_BSO = "_id";
     public static final String CLAU_TITOL = "titol";
     public static final String CLAU_AUTOR = "autor";
-    public static final String CLAU_DISC = "disc";
-    public static final String CLAU_DATA_DISC = "data";
-    public static final String CLAU_DURACIO = "temps";
+    public static final String CLAU_DURACIO = "duracio";
+    public static final String CLAU_DATA_BSO = "data";
+    public static final String CLAU_LINK = "link";
 
     public static final String BD_CREATE_BSO = "create table " + BD_TAULA_BSO + "( " + CLAU_ID_BSO + " integer primary key autoincrement, " + CLAU_TITOL + " TEXT NOT NULL, " +
-            CLAU_AUTOR + " TEXT, " + CLAU_DISC + " TEXT, " + CLAU_DATA_DISC + " TEXT, " + CLAU_DURACIO + " LONG);";
+            CLAU_AUTOR + " TEXT, " + CLAU_DURACIO + " TEXT, " + CLAU_DATA_BSO + " TEXT, " + CLAU_LINK + " text);";
 
 
     //Declaracio taula genere

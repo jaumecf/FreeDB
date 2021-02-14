@@ -22,7 +22,7 @@ public class InterficieBBDD {
 
     private String[] allColumnsPelicula = {AjudaPeliBBDD.CLAU_ID_PELICULA, AjudaPeliBBDD.CLAU_NOM, AjudaPeliBBDD.CLAU_COMENTARI, AjudaPeliBBDD.CLAU_DATA, AjudaPeliBBDD.CLAU_VALORACIO, AjudaPeliBBDD.CLAU_FOTO, AjudaPeliBBDD.CLAU_REL_GEN, AjudaPeliBBDD.CLAU_REL_BSO};
 
-    private String[] allColumnsBSO = {AjudaPeliBBDD.CLAU_ID_PELICULA, AjudaPeliBBDD.CLAU_NOM, AjudaPeliBBDD.CLAU_COMENTARI, AjudaPeliBBDD.CLAU_DATA, AjudaPeliBBDD.CLAU_VALORACIO, AjudaPeliBBDD.CLAU_FOTO, AjudaPeliBBDD.CLAU_REL_GEN, AjudaPeliBBDD.CLAU_REL_BSO};
+    private String[] allColumnsBSO = {AjudaPeliBBDD.CLAU_ID_BSO, AjudaPeliBBDD.CLAU_TITOL, AjudaPeliBBDD.CLAU_AUTOR, AjudaPeliBBDD.CLAU_DURACIO, AjudaPeliBBDD.CLAU_DATA_BSO, AjudaPeliBBDD.CLAU_LINK};
 
     private String[] allColumnsGenere = {AjudaPeliBBDD.CLAU_ID_GENERE, AjudaPeliBBDD.CLAU_GENERE};
 
@@ -140,6 +140,8 @@ public class InterficieBBDD {
         return BitmapFactory.decodeByteArray(image, 0, image.length);
     }
 
+
+//lLISTA GÈNERES
     public ArrayList<Genere> llistaGeneres() {
         ArrayList<Genere> llista = new ArrayList<Genere>();
         Cursor cursor = bd.query(AjudaPeliBBDD.BD_TAULA_GENERE, allColumnsGenere, null, null, null, null, AjudaPeliBBDD.CLAU_GENERE + " ASC");
@@ -154,6 +156,7 @@ public class InterficieBBDD {
         return llista;
     }
 
+    //pASSAR UN cURSOR A UN OBJECTE GENERE
     private Genere cursorToGenere(Cursor cursor) {
         Genere gen = new Genere();
         gen.setId(cursor.getLong(0));
@@ -161,7 +164,7 @@ public class InterficieBBDD {
         return gen;
     }
 
-    //Retorna una pelicula
+    //Retorna un genere
     public String obtenirGenere(long IDFila) throws SQLException {
         Cursor mCursor = bd.query(true, AjudaPeliBBDD.BD_TAULA_GENERE, allColumnsGenere,AjudaPeliBBDD.CLAU_ID_GENERE + " = " + IDFila, null, null, null, null, null);
         if(mCursor != null) {
@@ -169,5 +172,71 @@ public class InterficieBBDD {
         }
         return cursorToGenere(mCursor).getNom();
     }
+
+    public BSO createBSO(BSO bso) {
+        // insert d'una nova peli
+        ContentValues values = new ContentValues();
+        values.put(AjudaPeliBBDD.CLAU_TITOL, bso.getTitol());
+        values.put(AjudaPeliBBDD.CLAU_AUTOR, bso.getAutor());
+        values.put(AjudaPeliBBDD.CLAU_DURACIO, bso.getDuracio());
+        values.put(AjudaPeliBBDD.CLAU_DATA_BSO, bso.getData());
+        values.put(AjudaPeliBBDD.CLAU_LINK, bso.getLink());
+        long insertId = bd.insert(AjudaPeliBBDD.BD_TAULA_BSO, null, values);
+        bso.setId(insertId);
+        return bso;
+    }
+
+    //Llista totes les BSO
+    public ArrayList<BSO> getAllBSO() {
+        ArrayList<BSO> bandes_sonores = new ArrayList<BSO>();
+        Cursor cursor = bd.query(AjudaPeliBBDD.BD_TAULA_BSO, allColumnsBSO, null, null, null, null, AjudaPeliBBDD.CLAU_TITOL + " ASC");
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            BSO bso = cursorToBSO(cursor);
+            bandes_sonores.add(bso);
+            cursor.moveToNext();
+        }
+        // Make sure to close the cursor
+        cursor.close();
+        return bandes_sonores;
+    }
+
+
+    private BSO cursorToBSO(Cursor cursor) {
+        BSO bso = new BSO();
+        bso.setId(cursor.getLong(0));
+        bso.setTitol(cursor.getString(1));
+        bso.setAutor(cursor.getString(2));
+        bso.setDuracio(cursor.getString(3));
+        bso.setData(cursor.getString(4));
+        bso.setLink(cursor.getString(5));
+        return bso;
+    }
+
+    //Retorna una BSO
+    public BSO obtenirBSO(long IDFila) throws SQLException {
+        Cursor mCursor = bd.query(true, AjudaPeliBBDD.BD_TAULA_BSO, allColumnsBSO,AjudaPeliBBDD.CLAU_ID_BSO + " = " + IDFila, null, null, null, null, null);
+        if(mCursor != null) {
+            mCursor.moveToFirst();
+        }
+        return cursorToBSO(mCursor);
+    }
+
+    //Modifica un contacte
+    public boolean actualitzaBSO(long IDFila, BSO bso) {
+        ContentValues values = new ContentValues();
+        values.put(AjudaPeliBBDD.CLAU_TITOL, bso.getTitol());
+        values.put(AjudaPeliBBDD.CLAU_AUTOR, bso.getAutor());
+        values.put(AjudaPeliBBDD.CLAU_DURACIO, bso.getDuracio());
+        values.put(AjudaPeliBBDD.CLAU_DATA_BSO, bso.getData());
+        values.put(AjudaPeliBBDD.CLAU_LINK, bso.getLink());
+        return bd.update(AjudaPeliBBDD.BD_TAULA_BSO, values, AjudaPeliBBDD.CLAU_ID_BSO + " = " + IDFila, null) > 0;
+    }
+
+    //Esborra un contacte
+    public boolean esborraBSO(long IDFila) {
+        return bd.delete(AjudaPeliBBDD.BD_TAULA_BSO, AjudaPeliBBDD.CLAU_ID_BSO + " = " + IDFila, null) > 0;
+    }
+
 
 }
