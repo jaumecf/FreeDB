@@ -51,6 +51,7 @@ public class AfegeixPelicula extends AppCompatActivity implements View.OnClickLi
     private byte[] bitmapmap;
     private float valoracio_rating = 0;
     private Genere genere = null;
+    private Pelicula peli = null;
 
 
     @Override
@@ -104,15 +105,17 @@ public class AfegeixPelicula extends AppCompatActivity implements View.OnClickLi
             bd.obre();
             Pelicula peli = generaObjectePelicula();
 
-            if (bd.createPeli(peli).getId() != -1) {
+            if (peli == null) {
+                Toast.makeText(this, "Posi un nom i un genere correcte", Toast.LENGTH_SHORT).show();
+            } else if (bd.createPeli(peli).getId() != -1) {
                 Toast.makeText(this, "Afegit correctament", Toast.LENGTH_SHORT).show();
+                bd.tanca();
+                Intent intent = new Intent();
+                setResult(RESULT_OK, intent);
+                finish();
             } else {
-                Toast.makeText(this, "Error a l’afegir", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Error a l’afegir BBDD", Toast.LENGTH_SHORT).show();
             }
-            bd.tanca();
-            Intent intent = new Intent();
-            setResult(RESULT_OK, intent);
-            finish();
         }else if(v == mImatge){
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, APP_PERMISSION_READ_STORAGE);
@@ -127,17 +130,15 @@ public class AfegeixPelicula extends AppCompatActivity implements View.OnClickLi
     }
 
     public Pelicula generaObjectePelicula(){
-        Pelicula peli = new Pelicula();
-        peli.setNom(editNom.getText().toString());
-        peli.setComentari((editComentari.getText().toString()));
-        peli.setData(editData.getText().toString());
-        peli.setValoracio(valoracio_rating);
-        peli.setFoto(bitmapmap);
-        peli.setIdGenere(genere.getId());
-        Log.d("id","ID genere: "+genere.getId()+" pel genere: "+genere.getNom());
-        Log.d("id","ID genere: "+peli.getIdGenere()+" pel genere: "+genere.getNom());
-
-
+        if(genere != null && !editNom.getText().toString().isEmpty()){
+            peli = new Pelicula();
+            peli.setNom(editNom.getText().toString());
+            peli.setComentari((editComentari.getText().toString()));
+            peli.setData(editData.getText().toString());
+            peli.setValoracio(valoracio_rating);
+            peli.setFoto(bitmapmap);
+            peli.setIdGenere(genere.getId());
+        }
         return peli;
     }
 

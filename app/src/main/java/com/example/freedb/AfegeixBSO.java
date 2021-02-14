@@ -5,8 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
+import com.google.android.youtube.player.YouTubeBaseActivity;
+import com.google.android.youtube.player.YouTubeInitializationResult;
+import com.google.android.youtube.player.YouTubePlayer;
 
-public class AfegeixBSO extends AppCompatActivity {
+
+public class AfegeixBSO extends YouTubeBaseActivity implements YouTubePlayer.OnInitializedListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -15,9 +19,14 @@ public class AfegeixBSO extends AppCompatActivity {
 
 
     }
-    public void showTimePickerDialog(View v) {
-        SelectorTemps newFragment = new SelectorTemps();
-        newFragment.show(getSupportFragmentManager(), "timePicker");
+
+    @Override
+    public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
+
     }
 
+    @Override
+    public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
+
+    }
 }
