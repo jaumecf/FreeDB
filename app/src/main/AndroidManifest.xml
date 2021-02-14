@@ -13,9 +13,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".DetallBSO"></activity>
-        <activity android:name=".YouTubeActivity"></activity>
-        <activity android:name=".AfegeixBSO" />
+        <activity android:name=".LlistaBSO"></activity>
+        <activity android:name=".BSO.DetallBSO" />
+        <activity android:name=".YouTubeActivity" />
+        <activity android:name=".BSO.AfegeixBSO" />
         <activity android:name=".DetallPelicula" />
         <activity android:name=".AfegeixPelicula" />
         <activity

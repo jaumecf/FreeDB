@@ -1,18 +1,19 @@
-package com.example.freedb;
+package com.example.freedb.BBDD;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.util.Log;
+
+import com.example.freedb.BSO;
+import com.example.freedb.Genere;
+import com.example.freedb.Pelicula;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
-import java.util.List;
 
 public class InterficieBBDD {
 
@@ -174,7 +175,6 @@ public class InterficieBBDD {
     }
 
     public BSO createBSO(BSO bso) {
-        // insert d'una nova peli
         ContentValues values = new ContentValues();
         values.put(AjudaPeliBBDD.CLAU_TITOL, bso.getTitol());
         values.put(AjudaPeliBBDD.CLAU_AUTOR, bso.getAutor());

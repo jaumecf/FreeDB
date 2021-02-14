@@ -1,4 +1,4 @@
-package com.example.freedb;
+package com.example.freedb.BBDD;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

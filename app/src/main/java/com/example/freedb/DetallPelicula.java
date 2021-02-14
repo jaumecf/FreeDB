@@ -16,7 +16,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -26,11 +25,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
 
+import com.example.freedb.BBDD.InterficieBBDD;
 import com.example.freedb.ui.dialog.DatePickerFragment;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
@@ -70,7 +67,6 @@ public class DetallPelicula extends AppCompatActivity implements View.OnClickLis
         bd = new InterficieBBDD(this.getApplicationContext());
         bd.obre();
         peli = bd.obtenirPelicula(idPelicula);
-        Log.d("ID"," ID BSO "+peli.getIdBSO());
 
 
 
@@ -251,7 +247,6 @@ public class DetallPelicula extends AppCompatActivity implements View.OnClickLis
 
         // attaching data adapter to spinner
         spinnerBSO.setAdapter(dataAdapterBSO);
-        Log.d("ID"," ID BSO "+peli.getIdBSO());
         spinnerBSO.setSelection(Math.round(peli.getIdBSO()));
     }
 
