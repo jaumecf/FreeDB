@@ -13,6 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".Ajuda"></activity>
         <activity android:name=".BSO.DetallBSO" />
         <activity android:name=".BSO.AfegeixBSO" />
         <activity android:name=".Pelicula.DetallPelicula" />

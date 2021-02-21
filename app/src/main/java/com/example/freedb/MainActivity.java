@@ -139,7 +139,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             }
             llistaBSO();
         }else if(id == R.id.ajuda){
-
+            startActivity(new Intent(getApplicationContext(), Ajuda.class));
         }
         return super.onOptionsItemSelected(item);
     }
